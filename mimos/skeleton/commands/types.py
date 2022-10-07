@@ -29,6 +29,9 @@ class SequentialCommand(Command):
     def __index__(self, idx):
         return self.commands[idx]
 
+    def __len__(self):
+        return len(self.commands)
+
 
 class ParallelCommand(Command):
     def __init__(self, *args: Command):
@@ -42,7 +45,7 @@ class ParallelCommand(Command):
             if type(arg) == ParallelCommand:
                 raise Exception("parallel commands cannot be nested")
 
-        self.check_animate(args)
+        self.check_cmd_overlap(args)
         self.commands = args
 
     def __iter__(self):
@@ -52,7 +55,10 @@ class ParallelCommand(Command):
     def __index__(self, idx):
         return self.commands[idx]
 
-    def check_animate(self, l: Iterable):
+    def __len__(self):
+        return len(self.commands)
+
+    def check_cmd_overlap(self, l: Iterable):
         data = defaultdict(lambda: 0)
 
         def count_cmds(l: Iterable):
