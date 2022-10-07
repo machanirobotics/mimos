@@ -5,7 +5,7 @@ from mimos.skeleton.commands.types import (
     SequentialCommand,
     Speak,
 )
-from mimos.skeleton.utils import visitor
+from mimos.utils import visitor
 from mimos.skeleton.base import Skeleton
 
 import threading
