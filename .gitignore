@@ -1,0 +1,10 @@
+venv
+__pycache__
+*.pyc
+build
+dist
+*.egg-info
+*.whl
+*.blend*
+db
+blendfiles
