@@ -12,16 +12,22 @@ import shutil
 
 
 class Blender(Skeleton):
-    def __init__(self, blend_file_path: str):
+    def __init__(self, blend_file_path: str, debug: bool = False):
         if not shutil.which("blender"):
             raise RuntimeError("Blender not found on path")
+
+        if not os.path.exists(blend_file_path):
+            raise FileNotFoundError(blend_file_path)
 
         operator_tpl_path = Path(__file__).parent / "operator.py.tpl"
         self.operator_path = self.create_operator_file(
             operator_tpl_path, {"${SITE_PACKAGES}": str(site.getsitepackages())}
         )
         cmd = f"blender -y {blend_file_path} -P {self.operator_path}"
-        self.process = sp.Popen(shlex.split(cmd), stdout=sp.PIPE, stderr=sp.PIPE)
+        if not debug:
+            self.process = sp.Popen(shlex.split(cmd))
+        else:
+            self.process = sp.Popen(shlex.split(cmd), stdout=sp.PIPE, stderr=sp.PIPE)
 
     def move(self, data: FrameData):
         stream_socket.send_json(data.json())
