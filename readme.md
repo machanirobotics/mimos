@@ -9,7 +9,7 @@ $ python3.10 -m venv venv
 $ source venv/bin/activate
 ```
 
-Install an editable, developement version of the package
+Install an editable, development version of the package
 
 ```
 $ pip install -e ".[dev]"
