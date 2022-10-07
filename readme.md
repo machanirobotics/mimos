@@ -17,7 +17,7 @@ $ pip install -e .
 
 ## Build
 
-Make sure you have the lates version of PyPA's [build](https://packaging.python.org/en/latest/key_projects/#build) installed:
+Make sure you have the latest version of PyPA's [build](https://packaging.python.org/en/latest/key_projects/#build) installed:
 
 ```
 $ pip install --upgrade build
