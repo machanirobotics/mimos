@@ -15,5 +15,10 @@ dynamic = ["version"]
 "Homepage" = "https://github.com/machanirobotics/mimos"
 "Bug Tracker" = "https://github.com/machanirobotics/mimos/issues"
 
+[project.optional-dependencies]
+dev = [
+    "black"
+]
+
 [tool.setuptools.dynamic]
 version = {attr = "mimos.__version__"}
