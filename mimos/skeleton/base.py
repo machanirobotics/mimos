@@ -1,7 +1,11 @@
 from abc import ABC, abstractmethod
 
 
+class JointData:
+    pass
+
+
 class Skeleton(ABC):
     @abstractmethod
-    def move(**kwargs):
+    def move(data: JointData):
         pass
