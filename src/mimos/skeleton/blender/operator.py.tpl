@@ -16,10 +16,11 @@ class MimosClientOperator(bpy.types.Operator):
     def __init__(self):
         self.zmq_ctx = zmq.Context()
         self.recv_sock = self.zmq_ctx.socket(zmq.SUB)
-        self.recv_sock.bind("tcp://*:6666")
+        self.recv_sock.bind(f"tcp://*:${STREAM_PORT}")
         self.recv_sock.setsockopt_string(zmq.SUBSCRIBE, "")
 
-        self.skeleton_name = "BODY_Bones"
+        # pass skeleton object name 
+        self.skeleton_name =  "${SKELETON_OBJECT}"
         self.skeleton = None
         self.timer = None
 
@@ -40,7 +41,7 @@ class MimosClientOperator(bpy.types.Operator):
     def execute(self, context):
         wm = context.window_manager
         # adding timer event for step of 0.04 secs
-        self.timer = wm.event_timer_add(time_step=0.04, window=context.window)
+        self.timer = wm.event_timer_add(time_step=float(${MODAL_TIMER}), window=context.window)
 
         # initializing animation data
         self.skeleton = bpy.data.objects[self.skeleton_name]

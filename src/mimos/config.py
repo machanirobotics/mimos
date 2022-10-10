@@ -1,6 +1,7 @@
 import os
 
-stream_url = "tcp://localhost:6666"
+stream_port = 6666
+stream_url = f"tcp://localhost:{stream_port}"
 
 
 class executors:
