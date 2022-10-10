@@ -28,3 +28,17 @@ Run the following to build the wheels
 ```
 python -m build
 ```
+
+## Documentation
+
+Install pdoc for Mimos related documentation
+
+```
+pip install pdoc
+```
+
+Run the following to start documentation server
+
+```
+pdoc mimos --http localhost:6000
+```
