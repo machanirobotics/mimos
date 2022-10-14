@@ -1,4 +1,9 @@
+import cv2
+import numpy as np
 import mimos as mi
+from pydantic import parse_obj_as
+from mimos.skeleton.base import FrameData
+from mimos.controllers import mimic_frame
 
 body = mi.Body(
     skeleton=mi.skeleton.Blender(
@@ -7,29 +12,27 @@ body = mi.Body(
 )
 
 
-body.animate("namaste")
-body.animate("l_stand_hello")
-# body.speak("hello")
+class Mimic:
+    def __init__(self):
+        self.frame_count = 0
 
-# body.do(
-#     mi.animate("dance-1"),
-#     mi.speak("hello"),
-#     mi.parallel(
-#         mi.animate("dance-3"),
-#         mi.speak("hello"),
-#     ),
-# )
+    def __call__(self, body):
+        # for frame in body.see():
+        while True:
+            frame = cv2.imread("assets/pose2.png")
+            self.frame_count += 1
+            image, keypoints = mimic_frame(frame)
+            body.move(
+                data=parse_obj_as(
+                    FrameData, {"frame_number": self.frame_count, "angles": keypoints}
+                )
+            )
+            cv2.imshow("MediaPipe Holistic", cv2.flip(image, 1))
+            if cv2.waitKey(5) & 0xFF == 27:
+                break
 
-# body.speak("im done")
-
-
-# class Mimic:
-#     def __call__(self, body):
-#         # for frame in body.see():
-#         #     cv2.imshow("frame", frame)
-#         #     cv2.waitKey(1)
-#         pass
+    cv2.destroyAllWindows()
 
 
-# humanoid = mi.Humanoid(body=body, controller=Mimic())
-# humanoid.run()
+humanoid = mi.Humanoid(body=body, controller=Mimic())
+humanoid.run()

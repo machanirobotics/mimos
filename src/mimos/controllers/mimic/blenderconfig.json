@@ -1,0 +1,52 @@
+{
+    "bone_config": [
+        {
+            "bone_name": "L_Shoulder",
+            "scale": [
+                -1,
+                1,
+                1
+            ]
+        },
+        {
+            "bone_name": "R_Shoulder",
+            "scale": [
+                -1,
+                1,
+                1
+            ]
+        },
+        {
+            "bone_name": "L_Elbow",
+            "scale": [
+                1,
+                1,
+                1
+            ]
+        },
+        {
+            "bone_name": "R_Elbow",
+            "scale": [
+                -1,
+                1,
+                1
+            ]
+        },
+        {
+            "bone_name": "R_Wrist",
+            "scale": [
+                -1,
+                1,
+                1
+            ]
+        },
+        {
+            "bone_name": "L_Wrist",
+            "scale": [
+                -1,
+                1,
+                1
+            ]
+        }
+    ]
+}

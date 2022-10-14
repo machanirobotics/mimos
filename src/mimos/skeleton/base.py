@@ -1,14 +1,24 @@
 from abc import ABC, abstractmethod
 from pydantic import BaseModel
 from typing import List, Dict, Tuple
+import numpy as np
+
+
+class MimicData(BaseModel):
+    """
+    This class is used to represent mimic controllers output
+    """
+
+    frame: np.ndarray
+    keypoint: Dict[str, List[float]]
+
+    class Config:
+        arbitrary_types_allowed = True
 
 
 class FrameData(BaseModel):
     """
     This class is used to represent a frame in the animation.
-
-    Args:
-        BaseModel (_type_): pydantic model.
     """
 
     frame_number: int
@@ -18,9 +28,6 @@ class FrameData(BaseModel):
 class AnimationData(BaseModel):
     """
     This class is used to represent an animation.
-
-    Args:
-        BaseModel (_type_): pydantic model.
     """
 
     action: str

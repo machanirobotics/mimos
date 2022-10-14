@@ -23,3 +23,8 @@ class RGBCamera(Input):
         if now - self.prev_time > 1.0 / self.fps:
             self.prev_time = now
             return cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
+
+    def stop(self):
+        print("rgb camera stop() called...")
+        self.cam.release()
+        cv2.destroyAllWindows()
