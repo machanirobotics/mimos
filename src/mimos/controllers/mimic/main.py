@@ -11,21 +11,24 @@ mimic_pose_landmarks = mimic_config["pose_landmarks"]
 landmark_bone_map = mimic_config["landmark_bone_map"]
 keypoint_joint_map = mimic_config["keypoint_joint_map"]
 
+# initialize mediapipe
+mp_drawing = mp.solutions.drawing_utils
+mp_drawing_styles = mp.solutions.drawing_styles
+mp_pose = mp.solutions.pose
+pose = mp_pose.Pose(
+    static_image_mode=True,
+    min_detection_confidence=0.7,
+)
+
 
 def mediapipe_pose(frame):
-    mp_drawing = mp.solutions.drawing_utils
-    mp_drawing_styles = mp.solutions.drawing_styles
-    mp_pose = mp.solutions.pose
-    pose = mp_pose.Pose(
-        static_image_mode=True,
-        min_detection_confidence=0.7,
-    )
     frame.flags.writeable = False
     results = pose.process(frame)
     pose_landmarks = results.pose_landmarks
     pose_world_landmarks = results.pose_world_landmarks
 
     return {
+        "results": results,
         "frame": frame,
         "pose_landmarks": pose_landmarks,
         "pose_world_landmarks": pose_world_landmarks,
@@ -38,6 +41,8 @@ def get_pose_keypoints(frame):
 
     # get mediapipe output
     mediapipe_output = mediapipe_pose(frame)
+    results = mediapipe_output["results"]
+
     output_frame = mediapipe_output["frame"]
     pose_landmarks = mediapipe_output["pose_landmarks"]
     pose_world_landmarks = mediapipe_output["pose_world_landmarks"]
@@ -66,5 +71,13 @@ def get_pose_keypoints(frame):
         keypoint_dict[joint] = translate_to_blender(
             joint, keypoint_dict, keypoint_joint_map
         )
+
+    # draw pose keypoints on frame
+    mp_drawing.draw_landmarks(
+        frame,
+        results.pose_landmarks,
+        mp_pose.POSE_CONNECTIONS,
+        landmark_drawing_spec=mp_drawing_styles.get_default_pose_landmarks_style(),
+    )
 
     return {"frame": output_frame, "keypoints": keypoint_dict}

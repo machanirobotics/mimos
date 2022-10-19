@@ -17,7 +17,7 @@ class Mimic:
 
     def __call__(self, body):
         while True:
-            frame = cv2.imread("assets/pose4.png")
+            frame = cv2.imread("assets/pose13.jpeg")
             self.frame_count += 1
             output = get_pose_keypoints(frame)
             image = output["frame"]
@@ -27,11 +27,11 @@ class Mimic:
                     FrameData, {"frame_number": self.frame_count, "angles": keypoints}
                 )
             )
-            # cv2.imshow("MediaPipe Holistic", image)
-            # if cv2.waitKey(5) & 0xFF == 27:
-            #     break
+            cv2.imshow("MediaPipe Holistic", image)
+            if cv2.waitKey(5) & 0xFF == 27:
+                break
 
-    # cv2.destroyAllWindows()
+        cv2.destroyAllWindows()
 
 
 humanoid = mi.Humanoid(body=body, controller=Mimic())

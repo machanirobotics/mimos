@@ -54,7 +54,7 @@
             "scale": 1,
             "axis": "y",
             "euler": [
-                "Ground",
+                "R_Hip",
                 "R_Shoulder",
                 "R_Elbow"
             ]
@@ -83,7 +83,7 @@
             "scale": 1,
             "axis": "y",
             "euler": [
-                "Ground",
+                "L_Hip",
                 "L_Shoulder",
                 "L_Elbow"
             ]
