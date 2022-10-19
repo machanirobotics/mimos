@@ -10,7 +10,7 @@ import json
 import numpy as np
 
 
-blender_config = open("src/mimos/controllers/mimic/blenderconfig.json")
+blender_config = open("src/mimos/controllers/mimic/config/blender.config.json")
 class MimosClientOperator(bpy.types.Operator):
     bl_idname = "wm.mimos_client_operator"
     bl_label = "Mimos Client Operator"
@@ -22,13 +22,13 @@ class MimosClientOperator(bpy.types.Operator):
         self.recv_sock.setsockopt_string(zmq.SUBSCRIBE, "")
 
         # pass skeleton object name 
-        self.skeleton_name =  "${SKELETON_OBJECT}"
+        self.skeleton_name = "${SKELETON_OBJECT}"
         self.skeleton = None
         self.timer = None
 
         # load bone config 
-
         self.bone_config = json.load(blender_config)
+        self.bones = [bone['bone_name'] for bone in self.bone_config["bone_config"]]
 
     def modal(self, context, event):
         if event.type == "TIMER":
@@ -60,16 +60,16 @@ class MimosClientOperator(bpy.types.Operator):
     def apply_angle(self, bone_name: str, angle: Tuple[float, float, float]):
         bone = self.skeleton.pose.bones.get(bone_name, None)
         scale_x, scale_y, scale_z = 1,1,1
-        if bone_name in {"L_Shoulder", "R_Shoulder", "L_Elbow", "R_Elbow", "L_Wrist", "R_Wrist"}:
+        if bone is not None and bone_name in self.bones:
             bone_info = [bone_ for bone_ in self.bone_config["bone_config"] if bone_['bone_name'] == bone_name]
             scale_x, scale_y, scale_z = bone_info[0]["scale"]
-        if bone is not None:
-            bone.rotation_euler.z = (angle[0]) * scale_x  # -3.14
-            bone.rotation_euler.x = (angle[1]) * scale_y
-            bone.rotation_euler.y =  (angle[2]) * scale_z  # +3.14
-        else: 
-            print(f"bone {bone_name} not found")
 
+            bone.rotation_euler.x = angle[1] * scale_y #angle[1]
+            bone.rotation_euler.y = angle[2] * scale_z #angle[2]
+            bone.rotation_euler.z = angle[0] * scale_x #
+
+        else: 
+            pass
 
 def register():
     bpy.utils.register_class(MimosClientOperator)

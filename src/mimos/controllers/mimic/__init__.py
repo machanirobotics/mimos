@@ -1,1 +1,1 @@
-from mimos.controllers.mimic.main import mimic_frame
+from mimos.controllers.mimic.main import get_pose_keypoints

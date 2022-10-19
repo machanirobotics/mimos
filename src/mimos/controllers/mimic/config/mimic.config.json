@@ -1,0 +1,107 @@
+{
+    "landmark_bone_map": {
+        "left_shoulder": "L_Shoulder",
+        "right_shoulder": "R_Shoulder",
+        "left_elbow": "L_Elbow",
+        "right_elbow": "R_Elbow",
+        "left_wrist": "L_Wrist",
+        "right_wrist": "R_Wrist",
+        "left_hip": "L_Hip",
+        "right_hip": "R_Hip",
+        "left_knee": "L_Knee",
+        "right_knee": "R_Knee",
+        "left_ankle": "L_Ankle",
+        "right_ankle": "R_Ankle"
+    },
+    "pose_landmarks": [
+        "nose",
+        "left_eye_inner",
+        "left_eye",
+        "left_eye_outer",
+        "right_eye_inner",
+        "right_eye",
+        "right_eye_outer",
+        "left_ear",
+        "right_ear",
+        "mouth_left",
+        "mouth_right",
+        "left_shoulder",
+        "right_shoulder",
+        "left_elbow",
+        "right_elbow",
+        "left_wrist",
+        "right_wrist",
+        "left_pinky",
+        "right_pinky",
+        "left_index",
+        "right_index",
+        "left_thumb",
+        "right_thumb",
+        "left_hip",
+        "right_hip",
+        "left_knee",
+        "right_knee",
+        "left_ankle",
+        "right_ankle",
+        "left_heel",
+        "right_heel",
+        "left_foot_index",
+        "right_foot_index"
+    ],
+    "keypoint_joint_map": {
+        "R_Shoulder": {
+            "id": 2,
+            "scale": 1,
+            "axis": "y",
+            "euler": [
+                "R_Shoulder",
+                "R_Elbow"
+            ]
+        },
+        "R_Elbow": {
+            "id": 3,
+            "scale": 1,
+            "axis": "z",
+            "euler": [
+                "R_Elbow",
+                "R_Wrist"
+            ]
+        },
+        "R_Wrist": {
+            "id": 4,
+            "scale": -1,
+            "axis": "x",
+            "euler": [
+                "R_Elbow",
+                "R_Wrist"
+            ]
+        },
+        "L_Shoulder": {
+            "id": 5,
+            "scale": 1,
+            "axis": "y",
+            "euler": [
+                "L_Shoulder",
+                "L_Elbow"
+            ]
+        },
+        "L_Elbow": {
+            "id": 6,
+            "scale": 1,
+            "axis": "z",
+            "euler": [
+                "L_Elbow",
+                "L_Wrist"
+            ]
+        },
+        "L_Wrist": {
+            "id": 7,
+            "scale": -1,
+            "axis": "x",
+            "euler": [
+                "L_Elbow",
+                "L_Wrist"
+            ]
+        }
+    }
+}

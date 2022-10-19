@@ -1,60 +1,32 @@
-import numpy as np
 import math
-
-LeftRightEarlobeDistance = 1.74095
-distanceBetweenEars = 0
-keypoint_joint_map = {
-    "R_Shoulder": {
-        "id": 2,
-        "scale": 1,
-        "axis": "y",
-        "euler": ["R_Shoulder", "R_Elbow"],
-    },
-    "R_Elbow": {
-        "id": 3,
-        "scale": 1,
-        "axis": "z",
-        "euler": ["R_Elbow", "R_Wrist"],
-    },
-    "R_Wrist": {"id": 4, "scale": -1, "axis": "x", "euler": ["R_Elbow", "R_Wrist"]},
-    "L_Shoulder": {
-        "id": 5,
-        "scale": 1,
-        "axis": "y",
-        "euler": ["L_Shoulder", "L_Elbow"],
-    },
-    "L_Elbow": {
-        "id": 6,
-        "scale": 1,
-        "axis": "z",
-        "euler": ["L_Elbow", "L_Wrist"],
-    },
-    "L_Wrist": {"id": 7, "scale": -1, "axis": "x", "euler": ["L_Elbow", "L_Wrist"]},
-}
+import numpy as np
 
 
-def ConvertPixelPointToBlenderUnits(pnt, distanceBetweenEars):
-    pntx = pnt[0]  # * (LeftRightEarlobeDistance / (distanceBetweenEars + 1e-6))
-    pnty = pnt[1]  # * (LeftRightEarlobeDistance / (distanceBetweenEars + 1e-6))
-    reliability = pnt[2]
+def translate_to_blender(
+    joint_name: str, keypoint_dict: list, keypoint_joint_map: dict
+):
+    rotation_value = 0, 0, 0
+    if joint_name in {"R_Shoulder", "L_Shoulder", "L_Elbow", "R_Elbow"}:
+        joint_info = keypoint_joint_map[joint_name]
+
+        kp1, kp2 = [
+            ConvertPixelPointToBlenderUnits(np.array(keypoint_dict[joint]))
+            for joint in joint_info["euler"]
+        ]
+        rotation_value = get_euler_angles(kp1, kp2)
+    return rotation_value
+
+
+def ConvertPixelPointToBlenderUnits(pnt, blender_scale=0.425):
+    pntx = pnt[0] * blender_scale
+    pnty = pnt[1] * blender_scale
+    reliability = pnt[2] * blender_scale
     return [pntx, pnty, reliability]
 
 
 def unit_vector(vector):
-    """Returns the unit vector of the vector."""
+    """Returns them unit vector of the vector."""
     return vector / np.linalg.norm(vector)
-
-
-def get_angle(k1: np.ndarray, k2: np.ndarray, k3: np.ndarray):
-    """
-    the keypoints k1, k2, k3 are connected in this order, and the result angle (IN DEGREES) is the angle at joint k2
-        ki = (xi, yi); each keypoint is a np array of x and y coords
-    """
-    v1 = np.subtract(k2, k1)
-    v2 = np.subtract(k3, k2)
-    v1_u = unit_vector(v1)
-    v2_u = unit_vector(v2)
-    return np.arccos(np.dot(v1_u, v2_u)) * 180.0 / np.pi
 
 
 def get_euler_angles(kp1: np.ndarray, kp2: np.ndarray):

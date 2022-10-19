@@ -1,9 +1,8 @@
 import cv2
-import numpy as np
 import mimos as mi
 from pydantic import parse_obj_as
 from mimos.skeleton.base import FrameData
-from mimos.controllers import mimic_frame
+from mimos.controllers import get_pose_keypoints
 
 body = mi.Body(
     skeleton=mi.skeleton.Blender(
@@ -17,17 +16,18 @@ class Mimic:
         self.frame_count = 0
 
     def __call__(self, body):
-        # for frame in body.see():
         while True:
-            frame = cv2.imread("assets/pose2.png")
+            frame = cv2.imread("assets/pose4.png")
             self.frame_count += 1
-            image, keypoints = mimic_frame(frame)
+            output = get_pose_keypoints(frame)
+            image = output["frame"]
+            keypoints = output["keypoints"]
             body.move(
                 data=parse_obj_as(
                     FrameData, {"frame_number": self.frame_count, "angles": keypoints}
                 )
             )
-            cv2.imshow("MediaPipe Holistic", cv2.flip(image, 1))
+            cv2.imshow("MediaPipe Holistic", image)
             if cv2.waitKey(5) & 0xFF == 27:
                 break
 

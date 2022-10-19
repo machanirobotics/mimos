@@ -3,7 +3,7 @@ import numpy as np
 import mimos as mi
 from pydantic import parse_obj_as
 from mimos.skeleton.base import FrameData
-from mimos.controllers import mimic_frame
+from mimos.controllers import get_pose_keypoints
 
 body = mi.Body(
     skeleton=mi.skeleton.Blender(
@@ -19,9 +19,9 @@ class Mimic:
     def __call__(self, body):
         # for frame in body.see():
         while True:
-            frame = cv2.imread("assets/pose2.png")
+            frame = cv2.imread("assets/pose10.jpg")
             self.frame_count += 1
-            image, keypoints = mimic_frame(frame)
+            image, keypoints = get_pose_keypoints(frame)
             body.move(
                 data=parse_obj_as(
                     FrameData, {"frame_number": self.frame_count, "angles": keypoints}
