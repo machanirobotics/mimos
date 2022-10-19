@@ -27,11 +27,11 @@ class Mimic:
                     FrameData, {"frame_number": self.frame_count, "angles": keypoints}
                 )
             )
-            cv2.imshow("MediaPipe Holistic", image)
-            if cv2.waitKey(5) & 0xFF == 27:
-                break
+            # cv2.imshow("MediaPipe Holistic", image)
+            # if cv2.waitKey(5) & 0xFF == 27:
+            #     break
 
-    cv2.destroyAllWindows()
+    # cv2.destroyAllWindows()
 
 
 humanoid = mi.Humanoid(body=body, controller=Mimic())

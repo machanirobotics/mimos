@@ -68,8 +68,16 @@ class MimosClientOperator(bpy.types.Operator):
             bone.rotation_euler.y = angle[2] * scale_z #angle[2]
             bone.rotation_euler.z = angle[0] * scale_x #
 
-        else: 
-            pass
+    def apply_location(self, bone_name: str, location):
+        bone = self.skeleton.pose.bones.get(bone_name, None)
+        scale_x, scale_y, scale_z = 1,1,1
+        if bone is not None and bone_name in self.bones:
+            bone_info = [bone_ for bone_ in self.bone_config["bone_config"] if bone_['bone_name'] == bone_name]
+            scale_x, scale_y, scale_z = bone_info[0]["scale"]
+            print(f"joint:{bone_name} location:{location}")
+            bone.location.x = location[1] #* scale_y
+            bone.location.y = location[2] #* scale_z
+            bone.location.z = location[0] #* scale_x
 
 def register():
     bpy.utils.register_class(MimosClientOperator)

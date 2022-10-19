@@ -43,6 +43,7 @@ def get_pose_keypoints(frame):
     pose_world_landmarks = mediapipe_output["pose_world_landmarks"]
 
     threed_coords = []
+    keypoint_dict["Ground"] = [1, 1, 1]
     if pose_landmarks is not None:
         pose_keypoints = pose_landmarks.landmark
         pose_world_keypoints = pose_world_landmarks.landmark
@@ -60,7 +61,7 @@ def get_pose_keypoints(frame):
                 )
                 keypoint_dict[bone_name] = [keypoint.x, keypoint.y, keypoint.z]
 
-    # get translated angles
+    # translate keypoints to bone angles #
     for joint, keypoint in keypoint_dict.items():
         keypoint_dict[joint] = translate_to_blender(
             joint, keypoint_dict, keypoint_joint_map
