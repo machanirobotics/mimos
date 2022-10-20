@@ -3,19 +3,21 @@ import sys
 site_packages_paths = ${SITE_PACKAGES}
 sys.path.extend(site_packages_paths)
 
-from typing import Tuple
 import zmq
 import bpy
 import json
 import numpy as np
+from typing import Tuple
 
-
+# load blender config 
 blender_config = open("src/mimos/controllers/mimic/config/blender.config.json")
+
 class MimosClientOperator(bpy.types.Operator):
     bl_idname = "wm.mimos_client_operator"
     bl_label = "Mimos Client Operator"
 
     def __init__(self):
+        print('Mimos Operator initialized...')
         self.zmq_ctx = zmq.Context()
         self.recv_sock = self.zmq_ctx.socket(zmq.SUB)
         self.recv_sock.bind(f"tcp://*:${STREAM_PORT}")
@@ -34,7 +36,6 @@ class MimosClientOperator(bpy.types.Operator):
         if event.type == "TIMER":
             # getting data from mimos
             frame_data = json.loads(self.recv_sock.recv_json())
-
             # getting the angles
             angles = frame_data.get("angles")
 
@@ -62,11 +63,11 @@ class MimosClientOperator(bpy.types.Operator):
         scale_x, scale_y, scale_z = 1,1,1
         if bone is not None and bone_name in self.bones:
             bone_info = [bone_ for bone_ in self.bone_config["bone_config"] if bone_['bone_name'] == bone_name]
-            # scale_x, scale_y, scale_z = bone_info[0]["scale"]
+            scale_x, scale_y, scale_z = bone_info[0]["scale"]
 
-            bone.rotation_euler.x = angle[0] # angle[1] * scale_y 
-            bone.rotation_euler.y = angle[1] # angle[2] * scale_z 
-            bone.rotation_euler.z = angle[2] # angle[0] * scale_x 
+            bone.rotation_euler.x = angle[0]
+            bone.rotation_euler.y = angle[1] 
+            bone.rotation_euler.z = angle[2]  
 
     def apply_location(self, bone_name: str, location):
         bone = self.skeleton.pose.bones.get(bone_name, None)
@@ -74,10 +75,9 @@ class MimosClientOperator(bpy.types.Operator):
         if bone is not None and bone_name in self.bones:
             bone_info = [bone_ for bone_ in self.bone_config["bone_config"] if bone_['bone_name'] == bone_name]
             scale_x, scale_y, scale_z = bone_info[0]["scale"]
-            print(f"joint:{bone_name} location:{location}")
-            bone.location.x = location[1] #* scale_y
-            bone.location.y = location[2] #* scale_z
-            bone.location.z = location[0] #* scale_x
+            bone.location.x = location[0]
+            bone.location.y = location[1]
+            bone.location.z = location[2]
 
 def register():
     bpy.utils.register_class(MimosClientOperator)

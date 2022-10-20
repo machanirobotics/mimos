@@ -11,7 +11,7 @@
         {
             "bone_name": "R_Shoulder",
             "scale": [
-                -1,
+                1,
                 1,
                 1
             ]
@@ -19,17 +19,17 @@
         {
             "bone_name": "L_Elbow",
             "scale": [
-                -0.5,
                 1,
-                -1
+                -1,
+                1
             ]
         },
         {
             "bone_name": "R_Elbow",
             "scale": [
-                -0.5,
                 1,
-                1
+                1,
+                -1
             ]
         },
         {
