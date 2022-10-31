@@ -5,10 +5,9 @@ from pydantic import parse_obj_as
 from mimos.skeleton.base import FrameData
 from mimos.controllers import get_pose_keypoints
 
+
 body = mi.Body(
-    skeleton=mi.skeleton.Blender(
-        "/home/rohan/Desktop/mrobotics/mimos/blendfiles/Ria.blend", debug=True
-    ),
+    skeleton=mi.skeleton.Blender("pass-in-the-path-to-blendfile", debug=True),
 )
 
 
@@ -19,7 +18,7 @@ class Mimic:
     def __call__(self, body):
         # for frame in body.see():
         while True:
-            frame = cv2.imread("assets/pose10.jpg")
+            frame = cv2.imread("pose1.jpg")
             self.frame_count += 1
             image, keypoints = get_pose_keypoints(frame)
             body.move(
