@@ -10,7 +10,8 @@ dependencies = [
     "opencv-python>=4.6.0.66",
     "pydantic>=1.10.2",
     "pyzmq>=24.0.1",
-    "toml>=0.10.2"
+    "toml>=0.10.2",
+    "mediapipe>=0.8.11"
 ]
 dynamic = ["version"]
 
@@ -22,6 +23,16 @@ dynamic = ["version"]
 dev = [
     "black"
 ]
+
+# to include non-python files
+[tool.setuptools.packages.find]
+namespaces = true
+where = ["src"]
+
+[tool.setuptools.package-data]
+mimos = ["*.rst"]
+# treating skeleton.blender as a namespace package
+"mimos.skeleton.blender" = ["*.tpl"]
 
 [tool.setuptools.dynamic]
 version = {attr = "mimos.__version__.__version__"}
