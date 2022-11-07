@@ -7,6 +7,5 @@ dist
 *.whl
 *.blend*
 db
-blendfiles
 assets
 mimos_test.py
