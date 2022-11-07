@@ -2,8 +2,6 @@ import os
 import pytest
 import mimos as mi
 
-mimos_mode = os.environ("MODE_ENV")
-
 
 class SampleMimic:
     def __init__(self):
@@ -13,7 +11,7 @@ class SampleMimic:
         pass
 
 
-def test_create_humanoid():
+def test_create_humanoid(mimos_mode):
     body = mi.Body(
         skeleton=mi.skeleton.Blender(
             "blendfiles/Sample.blend", debug=True, mode=mimos_mode

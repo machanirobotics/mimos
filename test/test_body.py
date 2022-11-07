@@ -2,10 +2,8 @@ import mimos as mi
 import pytest
 import os
 
-mimos_mode = os.environ("MODE_ENV")
 
-
-def test_create_body():
+def test_create_body(mimos_mode):
     # pass in wrong file path
     with pytest.raises(FileNotFoundError):
         body = mi.Body(
