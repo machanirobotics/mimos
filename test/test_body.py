@@ -12,6 +12,6 @@ def test_create_body():
 
     # pass in correct file path
     body = mi.Body(
-        skeleton=mi.skeleton.Blender("blendfiles/sample.blend", debug=True),
+        skeleton=mi.skeleton.Blender("blendfiles/Sample.blend", debug=True),
     )
     assert body is not None

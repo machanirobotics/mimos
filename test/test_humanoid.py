@@ -12,7 +12,7 @@ class SampleMimic:
 
 def test_create_humanoid():
     body = mi.Body(
-        skeleton=mi.skeleton.Blender("blendfiles/sample.blend", debug=True),
+        skeleton=mi.skeleton.Blender("blendfiles/Sample.blend", debug=True),
     )
     # not passing body object
     with pytest.raises(TypeError):
