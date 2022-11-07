@@ -5,7 +5,6 @@ build
 dist
 *.egg-info
 *.whl
-*.blend*
 db
 assets
 mimos_test.py
