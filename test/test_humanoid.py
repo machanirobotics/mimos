@@ -3,6 +3,8 @@ import pytest
 import mimos as mi
 
 mimos_mode = "test"
+
+
 class SampleMimic:
     def __init__(self):
         pass
