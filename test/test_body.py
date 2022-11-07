@@ -5,10 +5,11 @@ import os
 # set MODE_ENV as test
 mimos_mode = "test"
 env_file = os.getenv("GITHUB_ENV")
-with open(env_file, "a") as f:
+with open(env_file, "r") as f:
     for line_number, line in enumerate(f, start=1):
         if "MODE_ENV" in line:
             print("line env:::", line)
+            break
 #             mimos_mode = line.split("=")[1].strip()
 #             print("current mimos_mode is ", mimos_mode)
 

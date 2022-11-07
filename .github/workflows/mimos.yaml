@@ -18,12 +18,6 @@ jobs:
         with:
           python-version: ${{ matrix.python-version }}
 
-      - name: Install Blender
-        run: |
-          sudo apt update
-          sudo add-apt-repository ppa:thomas-schiex/blender
-          sudo apt-get install blender
-
       - name: Install dependencies
         run: |
           pip install -e ".[dev]"
