@@ -19,10 +19,11 @@ class Blender(Skeleton):
         debug: bool = False,
         skeleton_object: str = "BODY_Bones",
         modal_timer: float = 0.04,
+        mode: str = "prod",
     ):
         self.skeleton_object = skeleton_object
         self.modal_timer = modal_timer
-        if not shutil.which("blender"):
+        if mode != "test" and not shutil.which("blender"):
             raise RuntimeError("Blender not found on path")
 
         if not os.path.exists(blend_file_path):

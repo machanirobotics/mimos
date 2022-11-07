@@ -1,7 +1,8 @@
+import os
 import pytest
 import mimos as mi
 
-
+mimos_mode = "test"
 class SampleMimic:
     def __init__(self):
         pass
@@ -12,7 +13,9 @@ class SampleMimic:
 
 def test_create_humanoid():
     body = mi.Body(
-        skeleton=mi.skeleton.Blender("blendfiles/Sample.blend", debug=True),
+        skeleton=mi.skeleton.Blender(
+            "blendfiles/Sample.blend", debug=True, mode=mimos_mode
+        ),
     )
     # not passing body object
     with pytest.raises(TypeError):

@@ -2,6 +2,9 @@ name: Mimos CI/CD
 
 on: [push]
 
+env:
+  MODE_ENV: test
+
 jobs:
   build:
     runs-on: ubuntu-latest
