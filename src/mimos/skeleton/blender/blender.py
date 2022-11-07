@@ -23,27 +23,33 @@ class Blender(Skeleton):
     ):
         self.skeleton_object = skeleton_object
         self.modal_timer = modal_timer
-        if mode != "test" and not shutil.which("blender"):
-            raise RuntimeError("Blender not found on path")
-
         if not os.path.exists(blend_file_path):
             raise FileNotFoundError(blend_file_path)
 
-        operator_tpl_path = Path(__file__).parent / "operator.py.tpl"
-        self.operator_path = self.create_operator_file(
-            operator_tpl_path,
-            {
-                "${SITE_PACKAGES}": str(site.getsitepackages()),
-                "${SKELETON_OBJECT}": skeleton_object,
-                "${MODAL_TIMER}": str(modal_timer),
-                "${STREAM_PORT}": str(config.stream_port),
-            },
-        )
-        cmd = f"blender -y {blend_file_path} -P {self.operator_path}"
-        if debug:
-            self.process = sp.Popen(shlex.split(cmd))
+        # run blender in background if mode is production
+        if mode == "prod":
+            if not shutil.which("blender"):
+                raise RuntimeError("Blender not found on path")
+
+            operator_tpl_path = Path(__file__).parent / "operator.py.tpl"
+            self.operator_path = self.create_operator_file(
+                operator_tpl_path,
+                {
+                    "${SITE_PACKAGES}": str(site.getsitepackages()),
+                    "${SKELETON_OBJECT}": skeleton_object,
+                    "${MODAL_TIMER}": str(modal_timer),
+                    "${STREAM_PORT}": str(config.stream_port),
+                },
+            )
+            cmd = f"blender -y {blend_file_path} -P {self.operator_path}"
+            if debug:
+                self.process = sp.Popen(shlex.split(cmd))
+            else:
+                self.process = sp.Popen(
+                    shlex.split(cmd), stdout=sp.PIPE, stderr=sp.PIPE
+                )
         else:
-            self.process = sp.Popen(shlex.split(cmd), stdout=sp.PIPE, stderr=sp.PIPE)
+            pass
 
     def move(self, data: FrameData):
         stream_socket.send_json(data.json())
