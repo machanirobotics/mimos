@@ -1,9 +1,8 @@
-name: Mimos CI/CD
-
-on: [push]
+name: Mimos Integration
+on: [release]
 
 env:
-  MODE_ENV: test
+  MODE_ENV: prod
 
 jobs:
   build:

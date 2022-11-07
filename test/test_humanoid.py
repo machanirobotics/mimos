@@ -2,7 +2,7 @@ import os
 import pytest
 import mimos as mi
 
-mimos_mode = "test"
+mimos_mode = os.environ("MODE_ENV")
 
 
 class SampleMimic:

@@ -2,8 +2,7 @@ import mimos as mi
 import pytest
 import os
 
-# set MODE_ENV as test
-mimos_mode = "test"
+mimos_mode = os.environ("MODE_ENV")
 
 
 def test_create_body():
