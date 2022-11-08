@@ -1,6 +1,5 @@
 import mimos as mi
 import pytest
-import os
 
 
 def test_create_body(mimos_mode):

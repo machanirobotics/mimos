@@ -1,15 +1,15 @@
-from typing import Dict
-from mimos.skeleton.base import FrameData, Skeleton
-from mimos.network import stream_socket
-import mimos.config as config
-import time
-import subprocess as sp
-import shlex
-from pathlib import Path
-import tempfile
 import os
 import site
+import time
+import shlex
 import shutil
+import tempfile
+import subprocess as sp
+from typing import Dict
+from pathlib import Path
+import mimos.config as config
+from mimos.network import stream_socket
+from mimos.skeleton.base import FrameData, Skeleton
 
 
 class Blender(Skeleton):

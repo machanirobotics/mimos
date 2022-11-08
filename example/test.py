@@ -16,7 +16,6 @@ class Mimic:
         self.frame_count = 0
 
     def __call__(self, body):
-        # for frame in body.see():
         while True:
             frame = cv2.imread("pose1.jpg")
             self.frame_count += 1

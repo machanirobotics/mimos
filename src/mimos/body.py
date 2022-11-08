@@ -1,11 +1,10 @@
+import signal
 from typing import Optional
 from mimos.skeleton import Skeleton
 import mimos.skeleton.commands.executors as executor
 from mimos.skeleton.commands.types import Animate, Command, SequentialCommand, Speak
 from mimos.sensors.base import Input
 from mimos.utils.channel import Rx, channel
-
-import signal
 
 
 class Body:
