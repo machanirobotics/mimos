@@ -6,6 +6,5 @@ dist
 *.egg-info
 *.whl
 db
-assets
 mimos_test.py
 .pytest_cache
